@@ -1,0 +1,44 @@
+{
+  "name": "samachar",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@atlaskit/button": "^17.2.0",
+    "@atlaskit/css-reset": "^6.6.2",
+    "@atlaskit/datetime-picker": "^13.0.6",
+    "@atlaskit/dynamic-table": "^14.13.0",
+    "@atlaskit/eslint-plugin-design-system": "^8.23.1",
+    "@atlaskit/form": "^9.0.6",
+    "@atlaskit/modal-dialog": "^12.10.4",
+    "@atlaskit/textfield": "^6.0.0",
+    "@atlaskit/tokens": "^1.34.0",
+    "@material-ui/styles": "^4.11.5",
+    "axios": "^0.19.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-hook-form": "^7.49.3",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
