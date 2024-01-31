@@ -12,10 +12,6 @@ import UserService from "../data/UserService";
 import AddModal from "./AddModal";
 import UpdateModal from "./UpdateModal";
 
-const boldStyles = css({
-  fontWeight: "bold",
-});
-
 const useStyles = makeStyles({
   container: {
     width: "100%",
@@ -88,10 +84,10 @@ export default function UserTable() {
   });
 
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const closeEditModal = useCallback(() => setIsEditOpen(false), []);
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const [isAddOpen, setIsAddOpen] = useState(false);
 
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const closeEditModal = useCallback(() => setIsEditOpen(false), []);
 
   const openEditModal = useCallback((id) => {
     setSelectedUserId(id);
@@ -122,245 +118,236 @@ export default function UserTable() {
     }
   };
 
-const handleDataFinal = (data) => {
-  if (!data || data.length === 0) {
-    return [];
-  }
-  const checkDataType = (val) => (typeof val !== "string" ? "" : val);
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
-      checkDataType(value).toLowerCase().includes(searchKeyword.toLowerCase())
-    )
-  );
-  return [...filteredData].sort((a, b) => {
-    if (selectedSort.key) {
-      return selectedSort.sortOrder === "ASC"
-        ? checkDataType(a?.[selectedSort.key]).localeCompare(
-            checkDataType(b?.[selectedSort.key])
-          )
-        : checkDataType(b?.[selectedSort.key]).localeCompare(
-            checkDataType(a?.[selectedSort.key])
-          );
+  const handleDataFinal = (data) => {
+    if (!data || data.length === 0) {
+      return [];
     }
-    return data;
-  });
-};
+    const checkDataType = (val) => (typeof val !== "string" ? "" : val);
+    const filteredData = data.filter((item) =>
+      Object.values(item).some((value) =>
+        checkDataType(value).toLowerCase().includes(searchKeyword.toLowerCase())
+      )
+    );
+    return [...filteredData].sort((a, b) => {
+      if (selectedSort.key) {
+        return selectedSort.sortOrder === "ASC"
+          ? checkDataType(a?.[selectedSort.key]).localeCompare(
+              checkDataType(b?.[selectedSort.key])
+            )
+          : checkDataType(b?.[selectedSort.key]).localeCompare(
+              checkDataType(a?.[selectedSort.key])
+            );
+      }
+      return data;
+    });
+  };
+  const dataFinal = handleDataFinal(userData);
 
-const header = {
-  key: "abc",
-  cells: [
-    {
-      key: "stt",
-      content: (
-        <div className={classes.contentStyle}>
-          <h2>#</h2>
-        </div>
-      ),
-      with: 5,
-    },
-    {
-      key: "name",
-      content: (
-        <div className={classes.contentStyle}>
-          <h2>Name</h2>
-        </div>
-      ),
-      with: 15,
-    },
-    {
-      key: "cls",
-      content: (
-        <div className={classes.contentStyle}>
-          <h2>Class</h2>
-        </div>
-      ),
-      with: 15,
-    },
-    {
-      key: "birthDay",
-      content: (
-        <div className={classes.contentStyle}>
-          <h2>Birth Day</h2>
-        </div>
-      ),
-      with: 10,
-    },
-    {
-      key: "email",
-      content: (
-        <div className={classes.contentStyle}>
-          <h2>Email</h2>
-        </div>
-      ),
-      with: 20,
-    },
-    {
-      key: "address",
-      content: (
-        <div className={classes.contentStyle}>
-          <h2>Address</h2>
-        </div>
-      ),
-      with: 20,
-    },
-    {
-      key: "action",
-      content: (
-        <div className={classes.contentStyle}>
-          <h2>Action</h2>
-        </div>
-      ),
-      with: 5,
-    },
-  ],
-};
-
-const dataFinal = handleDataFinal(userData);
-
-const rows = dataFinal.map((data, key) => {
-  const datarow = {
-    key,
+  const header = {
+    key: "abc",
     cells: [
       {
-        key: data.id,
+        key: "stt",
         content: (
-          <div>
-            <div className={classes.rowsStyle}>{data.id}</div>
+          <div className={classes.contentStyle}>
+            <h2>#</h2>
           </div>
         ),
+        with: 5,
       },
       {
-        key: data.name,
+        key: "name",
         content: (
-          <div>
-            <div className={classes.rowsStyle}>{data.name}</div>
+          <div className={classes.contentStyle}>
+            <h2>Name</h2>
           </div>
         ),
+        with: 15,
       },
       {
-        key: data.cls,
+        key: "cls",
         content: (
-          <div>
-            <div className={classes.rowsStyle}>{data.cls}</div>
+          <div className={classes.contentStyle}>
+            <h2>Class</h2>
           </div>
         ),
+        with: 15,
       },
       {
-        key: data.birthDay,
+        key: "birthDay",
         content: (
-          <div>
-            <div className={classes.rowsStyle}>{data.birthDay}</div>
+          <div className={classes.contentStyle}>
+            <h2>Birth Day</h2>
           </div>
         ),
+        with: 10,
       },
       {
-        key: data.email,
+        key: "email",
         content: (
-          <div>
-            <div className={classes.rowsStyle}>{data.email}</div>
+          <div className={classes.contentStyle}>
+            <h2>Email</h2>
           </div>
         ),
+        with: 20,
       },
       {
-        key: data.address,
+        key: "address",
         content: (
-          <div>
-            <div className={classes.rowsStyle}>{data.address}</div>
+          <div className={classes.contentStyle}>
+            <h2>Address</h2>
           </div>
         ),
+        with: 20,
       },
       {
-        key: data.id,
+        key: "action",
         content: (
-          <div className={classes.rowsStyle}>
-            <div className={classes.contentStyle}>
-              <Button
-                appearance="warning"
-                onClick={() => openEditModal(data.id)}
-              >
-                Edit
-              </Button>
-              <Button
-                appearance="danger"
-                onClick={() => handleDeleteUser(data.id)}
-              >
-                Delete
-              </Button>
-            </div>
+          <div className={classes.contentStyle}>
+            <h2>Action</h2>
           </div>
         ),
+        with: 5,
       },
     ],
   };
-  return datarow;
-});
 
-const getAllUser = async () => {
-  await UserService.getAllUser()
-    .then((res) => {
-      setUserdata(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+  const rows = dataFinal.map((data, key) => {
+    const datarow = {
+      key,
+      cells: [
+        {
+          key: data.id,
+          content: (
+            <div>
+              <div className={classes.rowsStyle}>{data.id}</div>
+            </div>
+          ),
+        },
+        {
+          key: data.name,
+          content: (
+            <div>
+              <div className={classes.rowsStyle}>{data.name}</div>
+            </div>
+          ),
+        },
+        {
+          key: data.cls,
+          content: (
+            <div>
+              <div className={classes.rowsStyle}>{data.cls}</div>
+            </div>
+          ),
+        },
+        {
+          key: data.birthDay,
+          content: (
+            <div>
+              <div className={classes.rowsStyle}>{data.birthDay}</div>
+            </div>
+          ),
+        },
+        {
+          key: data.email,
+          content: (
+            <div>
+              <div className={classes.rowsStyle}>{data.email}</div>
+            </div>
+          ),
+        },
+        {
+          key: data.address,
+          content: (
+            <div>
+              <div className={classes.rowsStyle}>{data.address}</div>
+            </div>
+          ),
+        },
+        {
+          key: data.id,
+          content: (
+            <div className={classes.rowsStyle}>
+              <div className={classes.contentStyle}>
+                <Button
+                  appearance="warning"
+                  onClick={() => openEditModal(data.id)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  appearance="danger"
+                  onClick={() => handleDeleteUser(data.id)}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>
+          ),
+        },
+      ],
+    };
+    return datarow;
+  });
 
-useEffect(() => {
-  getAllUser();
-}, []);
+  const getAllUser = async () => {
+    await UserService.getAllUser()
+      .then((res) => {
+        setUserdata(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-return (
-  <div className={classes.container}>
-    <h1 className={classes.contentStyle}>User Management System</h1>
-    <div className={classes.tableContainer}>
-      <div className={classes.searchStyle}>
-        <TextField
-          name="keyword"
-          isCompact
-          width="300"
-          autoFocus={false}
-          placeholder="Search by name"
-          fontSize={16}
-          onChange={(e) => setSearchKeyword(e.target.value)}
-        />
+  useEffect(() => {
+    getAllUser();
+  }, []);
 
-        <Button appearance="primary" onClick={openAddModal}>
-          Add Student
-        </Button>
+  return (
+    <div className={classes.container}>
+      <h1 className={classes.contentStyle}>User Management System</h1>
+      <div className={classes.tableContainer}>
+        <div className={classes.searchStyle}>
+          <TextField
+            name="keyword"
+            isCompact
+            width="300"
+            autoFocus={false}
+            placeholder="Search by name"
+            fontSize={16}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+          />
+
+          <Button appearance="primary" onClick={openAddModal}>
+            Add Student
+          </Button>
+        </div>
+        <div className={classes.tableBody}>
+          <DynamicTable
+            head={header}
+            rows={rows}
+            rowsPerPage={5}
+            defaultPage={1}
+            loadingSpinnerSize="large"
+          />
+        </div>
       </div>
-      <div className={classes.tableBody}>
-        <DynamicTable
-          head={header}
-          rows={rows}
-          rowsPerPage={5}
-          defaultPage={1}
-          loadingSpinnerSize="large"
+      {isAddOpen && (
+        <AddModal
+          isOpen={isAddOpen}
+          closeModal={closeAddModal}
+          setUserdata={setUserdata}
         />
-      </div>
-    </div>
-    {/* {isEditOpen && (
-        <EditModal
+      )}
+      {isEditOpen && (
+        <UpdateModal
           isOpen={isEditOpen}
           closeModal={closeEditModal}
-          userEditInfo={selectedUserData}
-          // setUserEditInfo={setUserdata}
+          handleUpdateData={handleUpdateData}
+          editID={selectedUserId}
         />
-      )} */}
-    {isAddOpen && (
-      <AddModal
-        isOpen={isAddOpen}
-        closeModal={closeAddModal}
-        setUserdata={setUserdata}
-      />
-    )}
-    {isEditOpen && (
-      <UpdateModal
-        isOpen={isEditOpen}
-        closeModal={closeEditModal}
-        handleUpdateData={handleUpdateData}
-        editID={selectedUserId}
-      />
-    )}
-  </div>
-);
-  }
+      )}
+    </div>
+  );
+}

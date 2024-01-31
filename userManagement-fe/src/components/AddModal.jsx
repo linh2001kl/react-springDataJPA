@@ -48,7 +48,7 @@ const AddModal = ({ isOpen, closeModal, setUserdata }) => {
       setUserInfo({ ...userInfo, birthDay: e });
     }
   };
-  
+
   return (
     <ModalTransition>
       {isOpen && (

@@ -1,6 +1,6 @@
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Button from "@atlaskit/button/new";
-import { Field, HelperMessage, Label } from "@atlaskit/form";
+import { Field, Label } from "@atlaskit/form";
 import Textfield from "@atlaskit/textfield";
 import { makeStyles } from "@material-ui/styles";
 import { DatePicker } from "@atlaskit/datetime-picker";
@@ -26,18 +26,17 @@ const initValue = {
   email: "",
   address: "",
 };
-const UpdateModal = ({ isOpen, closeModal,handleUpdateData, editID }) => {
-  console.log(editID);
+const UpdateModal = ({ isOpen, closeModal, handleUpdateData, editID }) => {
   const classes = useStyles();
   const [userInfo, setUserInfo] = useState(initValue);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    let response = UserService.updateUser(editID,JSON.stringify(userInfo));
+    let response = UserService.updateUser(editID, JSON.stringify(userInfo));
     response.then((res) => {
-      handleUpdateData(res.data)
+      handleUpdateData(res.data);
     });
-    
+
     closeModal();
   };
   const onChangeInput = (e) => {
@@ -50,9 +49,9 @@ const UpdateModal = ({ isOpen, closeModal,handleUpdateData, editID }) => {
     }
   };
   useEffect(() => {
-    let response = UserService.getUserById(editID)
-    response.then((res)=>{
-      setUserInfo(res.data)
+    let response = UserService.getUserById(editID);
+    response.then((res) => {
+      setUserInfo(res.data);
     });
   }, []);
   return (
